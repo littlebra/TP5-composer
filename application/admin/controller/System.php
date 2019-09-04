@@ -2,14 +2,15 @@
 /**
  * @Author: gu
  * @Date:   2019-08-08 16:39:55
- * @Last Modified by:   Administrator
- * @Last Modified time: 2019-08-27 15:15:43
+ * @Last Modified by:   littlebra
+ * @Last Modified time: 2019-09-04 17:59:59
  */
 namespace app\admin\controller;
 
 use think\Controller;
 use app\admin\model\Admin as AdminModel;
 // use app\admin\model\UserAddress as UserAddressModel;
+use think\Request;
 
 /**
  * 
@@ -17,10 +18,13 @@ use app\admin\model\Admin as AdminModel;
 class System extends Controller
 {
 	
-	public function getAllAdminsInfo()
+	public function getAllAdminsInfo(Request $request)
     {
     	
     	if (session('user_id')) {
+
+            var_dump($request->param());
+
     		$res=AdminModel::getAllAdmins();
     		$this->assign('data',$res);
     		// $address=UserAddressModel::getAllUserAddress();
