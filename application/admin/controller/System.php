@@ -3,7 +3,7 @@
  * @Author: gu
  * @Date:   2019-08-08 16:39:55
  * @Last Modified by:   littlebra
- * @Last Modified time: 2019-09-04 17:59:59
+ * @Last Modified time: 2019-09-06 11:03:19
  */
 namespace app\admin\controller;
 
@@ -23,14 +23,30 @@ class System extends Controller
     	
     	if (session('user_id')) {
 
-            var_dump($request->param());
-
-    		$res=AdminModel::getAllAdmins();
+            $res=AdminModel::getAllAdmins();
     		$this->assign('data',$res);
     		// $address=UserAddressModel::getAllUserAddress();
     		// $this->assign('uaddrInfo',$address);
-    		return $this->fetch('list');
+    		
     		// return $res;
+            $reqArr=$request->param();
+            if ($reqArr) {
+                $params=[
+                    'username'=>$reqArr['user_name'],
+                    'password'=>$reqArr['user_password'],
+                    'realname'=>$reqArr['real_name'],
+                    'gender'=>$reqArr['gender'],
+                    'tel'=>$reqArr['utel'],
+                    'email'=>$reqArr['uemail'],
+                ];
+
+                $res=AdminModel::addAdmin($params);
+                var_dump($res);
+                return $this->fetch('list');
+            } else {
+                return $this->fetch('list');
+            }
+            
     	} else {
     		return false;
     	}
